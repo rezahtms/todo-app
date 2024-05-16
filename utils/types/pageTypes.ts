@@ -100,14 +100,6 @@ export interface I_Todo {
 
 
 
-export interface I_Delete_Icon {
-  id: string | number
-}
-
-
-
-
-
 export interface I_Add_New_Task {
   setIsOpen: () => void;
 }
