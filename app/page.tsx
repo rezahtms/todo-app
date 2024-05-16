@@ -1,5 +1,7 @@
-import styles from "./page.module.css";
+import Home from "@/components/pages/Home/Home";
 
-export default function Home() {
-  return <main className={styles.main}></main>;
-}
+const HomePage = async () => {
+  return <Home />;
+};
+
+export default HomePage;
