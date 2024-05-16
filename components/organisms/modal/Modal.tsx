@@ -1,6 +1,13 @@
 "use client";
 import TaskInput from "@/components/atoms/taskInput/TaskInput";
-import { Button, Dialog, FormLabel, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  FormControl,
+  FormLabel,
+  Stack,
+  Typography,
+} from "@mui/material";
 import Textarea from "@mui/joy/Textarea";
 import { ChangeEvent, FC, FormEvent, useContext, useState } from "react";
 import { TodoContext } from "@/contexts/TodoProvider";
@@ -38,7 +45,7 @@ const Modal: FC<I_Modal> = (props) => {
         backdropFilter: "blur(3px)",
       }}
     >
-      <form onSubmit={handleAddTask}>
+      <FormControl component="form" onSubmit={handleAddTask}>
         <Stack
           direction="column"
           spacing={1}
@@ -84,7 +91,7 @@ const Modal: FC<I_Modal> = (props) => {
             Add
           </Button>
         </Stack>
-      </form>
+      </FormControl>
     </Dialog>
   );
 };

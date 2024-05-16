@@ -1,6 +1,6 @@
 "use client";
 import React, { FC, useState, ChangeEvent, FormEvent, useContext } from "react";
-import { Button, Container, Input, Stack } from "@mui/material";
+import { Button, Container, FormControl, Input, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 import { TodoContext } from "@/contexts/TodoProvider";
@@ -37,7 +37,7 @@ const AddCompany: FC = () => {
       }}
       maxWidth="xl"
     >
-      <form onSubmit={handleSubmit}>
+      <FormControl component="form" onSubmit={handleSubmit}>
         <Stack direction="row" spacing={2}>
           <Input
             maxRows={15}
@@ -57,7 +57,7 @@ const AddCompany: FC = () => {
             Add
           </Button>
         </Stack>
-      </form>
+      </FormControl>
     </Container>
   );
 };
