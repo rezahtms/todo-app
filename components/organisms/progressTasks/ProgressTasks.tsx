@@ -1,90 +1,80 @@
-import React from "react";
-import { Box, Container, Stack, Typography } from "@mui/material";
-import { FC, useContext } from "react";
-import { TodoContext } from "@/contexts/TodoProvider";
-import DefinedTask from "@/components/molecules/definedTask/DefinedTask";
-import { I_Tasks_Type, I_Todo_column } from "@/utils/types/pageTypes";
+import React from 'react'
+import { Box, Container, Stack, Typography } from '@mui/material'
+import { useContext } from 'react'
+import { TodoContext } from '@/contexts/TodoProvider'
+import DefinedTask from '@/components/molecules/definedTask/DefinedTask'
+import { I_Tasks_Type, TaskColumn } from '@/utils/types/pageTypes'
 
 const ProgressTasks = () => {
-  const { task, handleDragDrop } = useContext(TodoContext);
-  const taskData: I_Tasks_Type[] = task || [];
-  const TodoColumn: I_Todo_column[] = [
-    {
-      id: "1",
-      columnTitle: "todo",
-      addButton: true,
-      todoList: taskData.filter((item) => item.status === "todo"),
-    },
-    {
-      id: "2",
-      columnTitle: "doing",
-      addButton: false,
-      todoList: taskData.filter((item) => item.status === "doing"),
-    },
-    {
-      id: "3",
-      columnTitle: "done",
-      addButton: false,
-      todoList: taskData.filter((item) => item.status === "done"),
-    },
-  ];
+  const { task, handleDragDrop } = useContext(TodoContext)
+  const taskData: I_Tasks_Type[] = task || []
+
+  const columns = ['todo', 'doing', 'done']
+  const renderableColumns = columns.map(
+    (status, i) =>
+      ({
+        id: i.toString(),
+        columnTitle: status,
+        taskList: taskData.filter(item => item.status === status),
+      } satisfies TaskColumn)
+  )
 
   const handleOnDrop = (id: string, title: string) => {
-    handleDragDrop(id, title);
-  };
+    handleDragDrop(id, title)
+  }
 
   const handleDragOver = (id: string, status: string) => {
-    handleDragDrop(id, status);
-  };
+    handleDragDrop(id, status)
+  }
 
   const handleDragLeave = (id: string, title: string) => {
-    handleDragDrop(id, title);
-  };
+    handleDragDrop(id, title)
+  }
 
   const handleDragEnd = (id: string, title: string) => {
-    handleDragDrop(id, title);
-  };
+    handleDragDrop(id, title)
+  }
 
   return (
-    <Container sx={{ mt: 1, p: 1 }} maxWidth="xl">
-      <Stack spacing={2} direction="row">
-        {TodoColumn.map((todo, index) => (
+    <Container sx={{ mt: 1, p: 1 }} maxWidth='xl'>
+      <Stack spacing={2} direction='row'>
+        {renderableColumns.map(taskColumn => (
           <Box
-            component="div"
-            key={index}
-            onDrop={(e) => {
-              e.preventDefault();
-              const taskId = e.dataTransfer.getData("text/plain");
-              handleOnDrop(taskId, todo.columnTitle);
+            key={taskColumn.id}
+            onDrop={e => {
+              e.preventDefault()
+              const taskId = e.dataTransfer.getData('text/plain')
+              handleOnDrop(taskId, taskColumn.columnTitle)
             }}
-            onDragOver={(e) => e.preventDefault()}
+            onDragOver={e => e.preventDefault()}
             sx={{
-              backgroundColor: "hsla(0, 0%, 25.49019607843137%, 0.308)",
-              backdropFilter: "blur(9px)",
+              backgroundColor: 'hsla(0, 0%, 25.49019607843137%, 0.308)',
+              backdropFilter: 'blur(9px)',
               p: 1,
-              border: "1px solid rgba(65, 65, 65, 0.493)",
+              border: '1px solid rgba(65, 65, 65, 0.493)',
               borderRadius: 0.5,
-              overflowY: "scroll",
-              height: "80vh",
-              width: "31vw",
-              maxHeight: "100%",
+              overflowY: 'scroll',
+              height: '80vh',
+              width: '31vw',
+              maxHeight: '100%',
             }}
           >
-            <Typography variant="h4" color="#fff">
-              {todo.columnTitle}
+            <Typography variant='h4' color='#fff'>
+              {taskColumn.columnTitle}
             </Typography>
-            {todo.todoList.map((data, index) => (
+            {taskColumn.taskList.map((data, index) => (
               <Box
-                component="div"
                 key={index}
                 draggable
-                onDragStart={(e) => {
-                  e.dataTransfer.setData("text/plain", data.id);
+                onDragStart={e => {
+                  e.dataTransfer.setData('text/plain', data.id)
                 }}
                 onDragOver={() => handleDragOver(data.id, data.status)}
-                onDragLeave={() => handleDragLeave(data.id, todo.columnTitle)}
+                onDragLeave={() =>
+                  handleDragLeave(data.id, taskColumn.columnTitle)
+                }
                 onDragEnd={() =>
-                  handleDragEnd(data.id, String(todo.columnTitle))
+                  handleDragEnd(data.id, String(taskColumn.columnTitle))
                 }
               >
                 <DefinedTask {...data} key={`Task-Data-${index}`} />
@@ -94,7 +84,6 @@ const ProgressTasks = () => {
         ))}
       </Stack>
     </Container>
-  );
-};
-
-export default ProgressTasks;
+  )
+}
+export default ProgressTasks

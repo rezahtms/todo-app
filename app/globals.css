@@ -4,19 +4,22 @@
   padding: 0;
   outline: none;
 }
-body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-  height: 100%;
-  max-height: 100vh;
+
+html {
   background: linear-gradient(
       45deg,
       rgba(65, 65, 65, 0.308),
       rgba(65, 65, 65, 0.308)
     ),
-    url("/images/background.jpg") no-repeat center / cover;
-  overflow: hidden;
+    url("/images/background.jpg") no-repeat center;
+  background-size: cover;
+  min-height: 100dvh;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
 }
 
 li {
